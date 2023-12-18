@@ -16,9 +16,16 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapGet("/", () => "Hello World!");
-app.MapGet("/person", () => new Person("Dua", "Lipa"));
+app.MapGet("/person", () => new List<Person> { new ("Dua", "Lipa"), new("Bektur", "Omurkan")});
+app.MapGet("/adam", () => new Adam { code = "hY8wjjh", id = 789});
 
 app.Run();
 
 
 public record Person (string FistName, string LastName);
+
+public class Adam
+{
+	public string? code { get; set; }
+	public int id { get; set; }
+}
