@@ -1,9 +1,13 @@
 using Microsoft.AspNetCore.Diagnostics;
 
-var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+WebApplication app = builder.Build();
 
+
+app.UseWelcomePage("/");
+app.UseDeveloperExceptionPage();
 app.UseStaticFiles();
+app.UseRouting();
 
 app.MapGet("/", () => "Hello world!");
 
