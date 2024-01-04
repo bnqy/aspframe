@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Mvc.Formatters;
 using System.Collections.Concurrent;
+using System.Net.Mime;
 
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
@@ -37,6 +39,13 @@ app.MapDelete("/fruit/{id}", (string id) =>
 	return Results.NoContent();
 });
 //app.MapDelete("/fruit/{id}", DeleteFruit);
+
+app.MapGet("/teapot", (HttpResponse hp) =>
+{
+	hp.StatusCode = 418;
+	hp.ContentType = MediaTypeNames.Text.Plain;
+	return hp.WriteAsync("I am a teapot!");
+});
 
 app.Run();
 
