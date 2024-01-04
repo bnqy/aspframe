@@ -29,6 +29,6 @@ if (app.Environment.IsDevelopment())
 app.MapGet("/", () => "Hello World!");
 //app.MapGet("/person", () => new List<Person> { new ("Dua", "Lipa"), new("Bektur", "Omurkan")});
 //app.MapGet("/adam", () => new Adam { code = "hY8wjjh", id = 789});
-app.MapGet("/person/{name}", (string name) => people.Where(p => p.FirstName.StartsWith(name)));
+//app.MapGet("/person/{name}", (string name) => people.Where(p => p.FirstName.StartsWith(name)));
 
 app.Run();

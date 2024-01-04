@@ -3,10 +3,21 @@ using System.Collections.Concurrent;
 using System.Net.Mime;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddProblemDetails();
+
 var app = builder.Build();
 
-var _fruit = new ConcurrentDictionary<string, Fruit>();
+//if (!app.Environment.IsDevelopment())
+{
+	app.UseExceptionHandler();
+}
+app.UseStatusCodePages();
 
+app.MapGet("/", void () => throw new Exception());
+
+var _fruit = new ConcurrentDictionary<string, Fruit>();
+ 
 app.MapGet("/fruit", () => _fruit);
 
 app.MapGet("/fruit/{id}", (string id) =>
