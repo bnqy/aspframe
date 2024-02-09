@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc.Formatters;
 using System.Collections.Concurrent;
 using System.Net.Mime;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddProblemDetails();
@@ -54,11 +55,13 @@ fruits.TryGetValue(id, out var fruit)
 
 app.MapPost("/fruit/{id}", (string id, Fruit fruit) => fruits.TryAdd(id, fruit)
 ? TypedResults.Created($"/fruit/{id}", fruit)                    // returns 201 created response wirh json
- //: Results.BadRequest(new { id = "this id is already exists"})
+																 //: Results.BadRequest(new { id = "this id is already exists"})
 : Results.ValidationProblem(new Dictionary<string, string[]>()
 {
-	{"id", new[] {"A fruit with this id already exists"}}
-}));  // if id exists returns 400 Bad res
+	{"id", new[] {"A fruit with this id already exists"}}   // if id exists returns 400 Bad res
+})) 
+	.AddEndpointFilterFactory(ValidHepler.ValidateIdFactory);
+
 
 app.MapPut("/fruit/{id}", (string id, Fruit fruit) =>
 {
@@ -66,11 +69,13 @@ app.MapPut("/fruit/{id}", (string id, Fruit fruit) =>
 	return Results.NoContent();   // returns 204 response no content
 });
 
+
 app.MapDelete("/fruit/{id}", (string id) =>
 {
 	fruits.TryRemove(id, out _);
 	return Results.NoContent();
 });
+
 
 
 
@@ -82,8 +87,12 @@ app.MapGet("/httpresponse", (HttpResponse resp) =>
 });
 
 
+
+
 app.MapGet("/", void () => throw new Exception());
+
 app.MapGet("/sc", () => Results.NotFound());
+
 
 app.Run();
 
@@ -113,6 +122,45 @@ class ValidHepler
 		}
 
 		return await next(context);   // calls next filters
+	}
+
+
+	public static EndpointFilterDelegate ValidateIdFactory(
+		EndpointFilterFactoryContext context,  // provide details about endpoint handler
+		EndpointFilterDelegate next)
+	{
+		ParameterInfo[] parameters = context.MethodInfo.GetParameters();
+
+		int? idPos = null;
+
+		for (int i = 0; i < parameters.Length; i++)
+		{
+			if (parameters[i].Name == "id" && parameters[i].ParameterType == typeof(string))
+			{
+				idPos = i;
+				break;
+			}
+
+			if (!idPos.HasValue)
+			{
+				return next;
+			}
+		}
+
+		return async (invocationContext) =>
+		{
+			var id = invocationContext.GetArgument<string>(idPos.Value);
+
+			if (string.IsNullOrEmpty(id) || !id.StartsWith('f'))
+			{
+				return Results.ValidationProblem(new Dictionary<string, string[]>()
+				{
+					{ "id", new[] { "Id must start with 'f'" } }
+				});
+			}
+
+			return await next(invocationContext);
+		};
 	}
 
 }
