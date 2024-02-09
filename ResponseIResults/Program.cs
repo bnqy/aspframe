@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using System.Collections.Concurrent;
 using System.Net.Mime;
@@ -9,6 +10,15 @@ builder.Services.AddProblemDetails();
 
 var app = builder.Build();
 
+var fruits = new ConcurrentDictionary<string, Fruit>();
+
+RouteGroupBuilder fruitApiWithValid = app.MapGroup("/fruitos")
+	.AddEndpointFilterFactory(ValidHepler.ValidateIdFactory);
+
+fruitApiWithValid.MapGet("/{id}", (string id) =>
+fruits.TryGetValue(id, out var fruit)
+? TypedResults.Ok()
+: Results.Problem(statusCode: 404));
 
 if (!app.Environment.IsDevelopment())
 {
@@ -16,7 +26,6 @@ if (!app.Environment.IsDevelopment())
 }
 app.UseStatusCodePages();
 
-var fruits = new ConcurrentDictionary<string, Fruit>();
 
 
 app.MapGet("/fruits", () => fruits);
