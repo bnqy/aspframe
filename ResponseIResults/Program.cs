@@ -11,11 +11,16 @@ app.MapGet("/fruits", () => fruits);
 
 app.MapGet("/fruit/{id}", (string id) => fruits.TryGetValue(id, out var fruit) 
 ? TypedResults.Ok(fruit)   // returns 2000 ok res with json
-: Results.NotFound());   // if id does not exist returns 404 not found res
+// : Results.NotFound()
+: Results.Problem(statusCode: 404));   // if id does not exist returns 404 not found res
 
 app.MapPost("/fruit/{id}", (string id, Fruit fruit) => fruits.TryAdd(id, fruit)
 ? TypedResults.Created($"/fruit/{id}", fruit)                    // returns 201 created response wirh json
-: Results.BadRequest(new { id = "this id is already exists"}));  // if id exists returns 400 Bad res
+//: Results.BadRequest(new { id = "this id is already exists"})
+: Results.ValidationProblem(new Dictionary<string, string[]>()
+{
+	{"id", new[] {"A fruit with this id already exists"}}
+}));  // if id exists returns 400 Bad res
 
 app.MapPut("/fruit/{id}", (string id, Fruit fruit) =>
 {
