@@ -3,7 +3,15 @@ using System.Collections.Concurrent;
 using System.Net.Mime;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddProblemDetails();
+
 var app = builder.Build();
+
+if (!app.Environment.IsDevelopment())
+{
+	app.UseExceptionHandler();
+}
 
 var fruits = new ConcurrentDictionary<string, Fruit>();
 
@@ -42,6 +50,7 @@ app.MapGet("/httpresponse", (HttpResponse resp) =>
 	return resp.WriteAsync("It is a resp with Httpresponse!");
 });
 
+app.MapGet("/", void () => throw new Exception());
 
 app.Run();
 
