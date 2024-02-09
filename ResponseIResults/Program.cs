@@ -39,9 +39,16 @@ app.MapGet("/fruits", () => fruits);
 app.MapGet("/fruit/{id}", (string id) =>
 fruits.TryGetValue(id, out var fruit)
 ? TypedResults.Ok(fruit)   // returns 2000 ok res with json
-							   // : Results.NotFound()	   
+						   // : Results.NotFound()	   
 : Results.Problem(statusCode: 404)) // if id does not exist returns 404 not found res
-	.AddEndpointFilter(ValidHepler.ValidateId);   // adds filter
+	.AddEndpointFilter(ValidHepler.ValidateId) // add filter
+	.AddEndpointFilter(async (context, next) =>
+	{
+		app.Logger.LogInformation("Executing filter...");
+		object? result = await next(context);
+		app.Logger.LogInformation($"Handler result: {result}");
+		return result;
+	});
 
 
 
