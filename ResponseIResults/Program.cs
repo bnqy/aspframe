@@ -13,6 +13,8 @@ if (!app.Environment.IsDevelopment())
 	app.UseExceptionHandler();
 }
 
+app.UseStatusCodePages();
+
 var fruits = new ConcurrentDictionary<string, Fruit>();
 
 app.MapGet("/fruits", () => fruits);
@@ -51,6 +53,7 @@ app.MapGet("/httpresponse", (HttpResponse resp) =>
 });
 
 app.MapGet("/", void () => throw new Exception());
+app.MapGet("/sc", () => Results.NotFound());
 
 app.Run();
 
