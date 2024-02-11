@@ -11,5 +11,16 @@ var app = builder.Build();
 app.MapGet("/test", () => "Hello World!");
 app.MapHealthChecks("/healthcheck");
 app.MapRazorPages();  // adds all razors as an endpoint
+app.MapGet("/products/{name}", (string name) => $"Products name is {name}")
+	.WithName("products");  // gives a name to endpoint by adding metadata to it
+
+app.MapGet("/links", (LinkGenerator generator) =>
+{
+	string link = generator.GetPathByName("products", new { name = "big-widget" });
+	string link2 = generator.GetUriByName("products", new { Name = "super-fancy-widget" }, "https", new HostString("localhost"));
+	return $"View the product at {link} and \t {link2}";
+});
+
+
 
 app.Run();
