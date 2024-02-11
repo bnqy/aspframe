@@ -8,7 +8,11 @@ var app = builder.Build();
 
 
 
-app.MapGet("/test", () => "Hello World!");
+app.MapGet("/test", () => "Hello World!")
+	.WithName("hello");  // gives a name "hello"
+
+app.MapGet("/redirect-hello", () => Results.RedirectToRoute("hello"));  // generates a url and redirects to "hello" endp
+
 app.MapHealthChecks("/healthcheck");
 app.MapRazorPages();  // adds all razors as an endpoint
 app.MapGet("/products/{name}", (string name) => $"Products name is {name}")
