@@ -20,3 +20,5 @@ app.MapGet("/", (LinkGenerator link, HttpContext c) => new[]
 });
 
 app.Run();
+
+

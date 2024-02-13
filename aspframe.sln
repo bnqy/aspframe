@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ResponseIResults", "Respons
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EndpointRouting", "EndpointRouting\EndpointRouting.csproj", "{E8234466-6DB1-4B82-B2B1-A1E91C2448BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EndpointRoutingRouteOptions", "EndpointRoutingRouteOptions\EndpointRoutingRouteOptions.csproj", "{2730019E-8214-46AA-A447-DCAF04D9A894}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EndpointRoutingRouteOptions", "EndpointRoutingRouteOptions\EndpointRoutingRouteOptions.csproj", "{2730019E-8214-46AA-A447-DCAF04D9A894}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelBindingMinApi", "ModelBindingMinApi\ModelBindingMinApi.csproj", "{66AF4317-981F-4AAB-9FB4-DF57C6E8C0D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{2730019E-8214-46AA-A447-DCAF04D9A894}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2730019E-8214-46AA-A447-DCAF04D9A894}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2730019E-8214-46AA-A447-DCAF04D9A894}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66AF4317-981F-4AAB-9FB4-DF57C6E8C0D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66AF4317-981F-4AAB-9FB4-DF57C6E8C0D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66AF4317-981F-4AAB-9FB4-DF57C6E8C0D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66AF4317-981F-4AAB-9FB4-DF57C6E8C0D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

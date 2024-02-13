@@ -15,9 +15,8 @@ var fruits = new ConcurrentDictionary<string, Fruit>();
 RouteGroupBuilder fruitApiWithValid = app.MapGroup("/fruitos")
 	.AddEndpointFilterFactory(ValidHepler.ValidateIdFactory);
 
-fruitApiWithValid.MapGet("/{id}", (string id) =>
-fruits.TryGetValue(id, out var fruit)
-? TypedResults.Ok()
+fruitApiWithValid.MapGet("/{id}", (string id) => fruits.TryGetValue(id, out var fruit)
+? TypedResults.Ok(fruit)
 : Results.Problem(statusCode: 404));
 
 if (!app.Environment.IsDevelopment())
@@ -46,8 +45,7 @@ app.MapGet("/fruits", () => fruits);
 	: Results.Problem(statusCode: 404);   // if id does not exist returns 404 not found res
 });*/
 
-app.MapGet("/fruit/{id}", (string id) =>
-fruits.TryGetValue(id, out var fruit)
+app.MapGet("/fruit/{id}", (string id) => fruits.TryGetValue(id, out var fruit)
 ? TypedResults.Ok(fruit)   // returns 2000 ok res with json
 						   // : Results.NotFound()	   
 : Results.Problem(statusCode: 404)) // if id does not exist returns 404 not found res
@@ -76,7 +74,8 @@ app.MapPut("/fruit/{id}", (string id, Fruit fruit) =>
 {
 	fruits[id] = fruit;
 	return Results.NoContent();   // returns 204 response no content
-});
+})
+	.AddEndpointFilter<IdValidFilter>();
 
 
 app.MapDelete("/fruit/{id}", (string id) =>
