@@ -53,6 +53,17 @@ $"Received {products.Length} items: {string.Join(", ", products.Select(x => x))}
 app.MapGet("/stock/{id?}", (int? id) => $"Received {id}");  // id is null when not provided
 app.MapGet("/stock2", (int? id) => $"Recieved: {id}");
 
+// LinkGenerator is registered in Di so can be used in the param
+app.MapGet("/links", ([FromServices] LinkGenerator links) => $"The Links API can be found at {links.GetPathByName("LinksApi")}")
+	.WithName("LinksApi");
+
+app.MapGet("/well-known", (HttpContext httpContext) => httpContext.Response.WriteAsync("Hello World!"));
+
+app.MapPost("/sizes", (SizeDetails sd) => $"Recieved {sd}");
+
+app.MapGet("/category/{id}",
+ ([AsParameters] SearchModel model) => $"Received {model}");   // asparam simplifies it like a DTO class
+
 app.Run();
 
 static string GetHomePage(LinkGenerator links, HttpContext context)
@@ -93,3 +104,33 @@ readonly record struct ProductId(int Id)
 		return false;
 	}
 }
+
+record SizeDetails(double Height, double Width)
+{
+	public static async ValueTask<SizeDetails?> BindAsync(HttpContext context)
+	{
+		using var sr = new StreamReader(context.Request.Body);
+
+		var line1 = await sr.ReadLineAsync(context.RequestAborted);
+		if (line1 is null)
+		{
+			return null;
+		}
+		var line2 = await sr.ReadLineAsync(context.RequestAborted);
+		if (line2 is null)
+		{
+			return null;
+		}
+
+		return double.TryParse(line1, out var height)
+			&& double.TryParse(line2, out var width)
+			? new SizeDetails(height, width)
+			: null;
+	}
+}
+
+record struct SearchModel(
+ int id,
+ int page,
+ [FromHeader(Name = "sort")] bool? sortAsc,
+ [FromQuery(Name = "q")] string search);
