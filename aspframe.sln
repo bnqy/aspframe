@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EndpointRoutingRouteOptions
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelBindingMinApi", "ModelBindingMinApi\ModelBindingMinApi.csproj", "{66AF4317-981F-4AAB-9FB4-DF57C6E8C0D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataValidationMinApi", "DataValidationMinApi\DataValidationMinApi.csproj", "{B659980F-9EC8-492B-9A08-59EDC9A19E89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataValidationMinApi", "DataValidationMinApi\DataValidationMinApi.csproj", "{B659980F-9EC8-492B-9A08-59EDC9A19E89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WithoutDIMinApi", "DIMinApi\WithoutDIMinApi.csproj", "{AD28F537-C760-4777-9B9C-F43FD4F15078}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{B659980F-9EC8-492B-9A08-59EDC9A19E89}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B659980F-9EC8-492B-9A08-59EDC9A19E89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B659980F-9EC8-492B-9A08-59EDC9A19E89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD28F537-C760-4777-9B9C-F43FD4F15078}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD28F537-C760-4777-9B9C-F43FD4F15078}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD28F537-C760-4777-9B9C-F43FD4F15078}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD28F537-C760-4777-9B9C-F43FD4F15078}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

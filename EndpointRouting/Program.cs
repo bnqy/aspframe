@@ -9,12 +9,12 @@ builder.Services.AddSingleton<ProductService>();  //registers ProductService as 
 
 var app = builder.Build();
 
-app.MapGet("/", (LinkGenerator links, HttpContext context) => GetHomePage(links, context));
+app.MapGet("/", (LinkGenerator links, HttpContext context) => GetHomePage(links, context));     // injecting DI
 
 app.MapGet("/test", () => "Hello World!")
 	.WithName("hello");  // gives a name "hello"
 
-app.MapGet("/redirect-hello", () => Results.RedirectToRoute("hello")) // generates a url and redirects to "hello" endp
+app.MapGet("/redirect-hello", () => Results.RedirectToRoute("hello")) // generates a url and redirects to "hello" endpoint
 	.WithName("redirect");
 
 app.MapHealthChecks("/healthcheck")
@@ -27,10 +27,12 @@ app.MapGet("/products/{name}", (string name) => $"Products name is {name}")
 
 app.MapGet("/links", (LinkGenerator generator) =>
 {
-	string link = generator.GetPathByName("products", new { name = "big-widget" });  //gens /products/big-widget
-	string link2 = generator.GetUriByName("products", new { Name = "super-fancy-widget" }, "https", new HostString("localhost"));  /* https://localhost/products/super-fancy-widget */
+	string link = generator.GetPathByName("products", new { name = "big-widget" });    //generates:  /products/big-widget
+	string link2 = generator.GetUriByName("products", 
+		new { Name = "super-fancy-widget" }, "https", new HostString("localhost"));  /* https://localhost/products/super-fancy-widget */
+
 	return $"View the product at {link} and \n\t{link2}";
-}).WithName("Links");
+}).WithName("Links");   // gives a name to endpoint
 
 app.MapGet("/{name}", (ProductService service, string name) =>
 {
@@ -38,7 +40,7 @@ app.MapGet("/{name}", (ProductService service, string name) =>
 	return product is null
 		? Results.NotFound()
 		: Results.Ok(product);
-}).WithName("product") ;
+}).WithName("product"); // gives a name to endpoint
 
 app.Run();
 

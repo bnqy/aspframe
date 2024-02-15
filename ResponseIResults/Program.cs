@@ -5,25 +5,25 @@ using System.Net.Mime;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddProblemDetails();
+builder.Services.AddProblemDetails();   // adds ProblemDetails Service
 
 
 var app = builder.Build();
 
 var fruits = new ConcurrentDictionary<string, Fruit>();
 
-RouteGroupBuilder fruitApiWithValid = app.MapGroup("/fruitos")
-	.AddEndpointFilterFactory(ValidHepler.ValidateIdFactory);
+RouteGroupBuilder fruitApiWithValid = app.MapGroup("/fruitos")    // groups enpdpoint in one group (/fruitos)
+	.AddEndpointFilterFactory(ValidHepler.ValidateIdFactory);     // added filter for all endpoint in a group
 
 fruitApiWithValid.MapGet("/{id}", (string id) => fruits.TryGetValue(id, out var fruit)
-? TypedResults.Ok(fruit)
-: Results.Problem(statusCode: 404));
+? TypedResults.Ok(fruit)    // returns 200 ok response with json body
+: Results.Problem(statusCode: 404));  // if does not exist returns 404 not found
 
 if (!app.Environment.IsDevelopment())
 {
 	app.UseExceptionHandler();
 }
-app.UseStatusCodePages();
+app.UseStatusCodePages();    // using status codes
 
 
 
@@ -46,10 +46,10 @@ app.MapGet("/fruits", () => fruits);
 });*/
 
 app.MapGet("/fruit/{id}", (string id) => fruits.TryGetValue(id, out var fruit)
-? TypedResults.Ok(fruit)   // returns 2000 ok res with json
-						   // : Results.NotFound()	   
-: Results.Problem(statusCode: 404)) // if id does not exist returns 404 not found res
-	.AddEndpointFilter(ValidHepler.ValidateId) // add filter
+? TypedResults.Ok(fruit)                  // returns 2000 ok res with json
+// : Results.NotFound()	   
+: Results.Problem(statusCode: 404))       // if id does not exist returns 404 not found res
+	.AddEndpointFilter(ValidHepler.ValidateId)     // add filter validates first id
 	.AddEndpointFilter(async (context, next) =>
 	{
 		app.Logger.LogInformation("Executing filter...");
@@ -62,12 +62,12 @@ app.MapGet("/fruit/{id}", (string id) => fruits.TryGetValue(id, out var fruit)
 
 app.MapPost("/fruit/{id}", (string id, Fruit fruit) => fruits.TryAdd(id, fruit)
 ? TypedResults.Created($"/fruit/{id}", fruit)                    // returns 201 created response wirh json
-																 //: Results.BadRequest(new { id = "this id is already exists"})
+//: Results.BadRequest(new { id = "this id is already exists"})
 : Results.ValidationProblem(new Dictionary<string, string[]>()
 {
 	{"id", new[] {"A fruit with this id already exists"}}   // if id exists returns 400 Bad res
 })) 
-	.AddEndpointFilterFactory(ValidHepler.ValidateIdFactory);
+	.AddEndpointFilterFactory(ValidHepler.ValidateIdFactory);   // adds filter to find id position and validates
 
 
 app.MapPut("/fruit/{id}", (string id, Fruit fruit) =>
@@ -75,7 +75,7 @@ app.MapPut("/fruit/{id}", (string id, Fruit fruit) =>
 	fruits[id] = fruit;
 	return Results.NoContent();   // returns 204 response no content
 })
-	.AddEndpointFilter<IdValidFilter>();
+	.AddEndpointFilter<IdValidFilter>();  // adds filter with custom class
 
 
 app.MapDelete("/fruit/{id}", (string id) =>
@@ -83,12 +83,12 @@ app.MapDelete("/fruit/{id}", (string id) =>
 	fruits.TryRemove(id, out _);
 	return Results.NoContent();
 })
-	.AddEndpointFilter<IdValidFilter>();
+	.AddEndpointFilter<IdValidFilter>();   // adds filter with custom class
 
 
 
 
-app.MapGet("/httpresponse", (HttpResponse resp) =>
+app.MapGet("/httpresponse", (HttpResponse resp) =>       // uses HttpResponse for status codes
 {
 	resp.StatusCode = 418;
 	resp.ContentType = MediaTypeNames.Text.Plain;
@@ -117,10 +117,10 @@ record Fruit(string Name, int stock);
 class ValidHepler
 {
 	public static async ValueTask<object?> ValidateId(
-		EndpointFilterInvocationContext context,   // exposes endpoint arguments and HttpContext
-		EndpointFilterDelegate next)  // next filter or endpoint
+		EndpointFilterInvocationContext context,       // exposes endpoint arguments and HttpContext
+		EndpointFilterDelegate next)                   // next filter or endpoint
 	{
-		var id = context.GetArgument<string>(0);  //gets first argument in the req
+		var id = context.GetArgument<string>(0);       //gets first argument in the request
 
 		if (string.IsNullOrEmpty(id) || !id.StartsWith('f'))
 		{
@@ -130,12 +130,12 @@ class ValidHepler
 			});
 		}
 
-		return await next(context);   // calls next filters
+		return await next(context);    // calls next filters
 	}
 
 
 	public static EndpointFilterDelegate ValidateIdFactory(
-		EndpointFilterFactoryContext context,  // provide details about endpoint handler
+		EndpointFilterFactoryContext context,        // provide details about endpoint handler
 		EndpointFilterDelegate next)
 	{
 		ParameterInfo[] parameters = context.MethodInfo.GetParameters();

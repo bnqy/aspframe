@@ -5,14 +5,15 @@ var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
 app.MapGet("/", () => "Hello World!");
-app.MapPost("/users", (UserModel model) => $"{model.ToString()}")
+app.MapPost("/users", (UserModel model) => $"{model}")
 	.WithParameterValidation();
 
-app.MapPost("user/{id}", ([AsParameters] GetUserModel model) => $"{model.Id.ToString()}")
+app.MapPost("user/{id}", ([AsParameters] GetUserModel model) => $"{model.Id}")
 	.WithParameterValidation();
+
 //it does not work
-// app.MapGet("/user/{id}", ([Range(0, 10)] int id) => id.ToString())
-//    .WithParameterValidation();
+//app.MapGet("/user/{id}", ([Range(0, 10)] int id) => id.ToString())
+//   .WithParameterValidation();
 
 app.Run();
 

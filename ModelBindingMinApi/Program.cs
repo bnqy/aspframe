@@ -53,7 +53,7 @@ $"Received {products.Length} items: {string.Join(", ", products.Select(x => x))}
 app.MapGet("/stock/{id?}", (int? id) => $"Received {id}");  // id is null when not provided
 app.MapGet("/stock2", (int? id) => $"Recieved: {id}");
 
-// LinkGenerator is registered in Di so can be used in the param
+// LinkGenerator is registered in Di so can be used in the parameters
 app.MapGet("/links", ([FromServices] LinkGenerator links) => $"The Links API can be found at {links.GetPathByName("LinksApi")}")
 	.WithName("LinksApi");
 

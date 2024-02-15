@@ -9,8 +9,8 @@ builder.Services.Configure<RouteOptions>(o =>
 
 var app = builder.Build();
 
-app.MapGet("/oKyEs", () => Results.Ok()).WithName("ok");
-app.MapGet("/{name}", (string name) => name).WithName("name");
+app.MapGet("/oKyEs", () => Results.Ok()).WithName("ok");       // changes to -> /okyes bc of o.LowercaseUrls = true;
+app.MapGet("/{name}", (string name) => name).WithName("name"); 
 
 
 app.MapGet("/", (LinkGenerator link, HttpContext c) => new[]
