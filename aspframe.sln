@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelBindingMinApi", "Model
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataValidationMinApi", "DataValidationMinApi\DataValidationMinApi.csproj", "{B659980F-9EC8-492B-9A08-59EDC9A19E89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WithoutDIMinApi", "DIMinApi\WithoutDIMinApi.csproj", "{AD28F537-C760-4777-9B9C-F43FD4F15078}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WithoutDIMinApi", "DIMinApi\WithoutDIMinApi.csproj", "{AD28F537-C760-4777-9B9C-F43FD4F15078}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WithDIMinApi", "WithDIMinApi\WithDIMinApi.csproj", "{AE3B3236-12F8-43AA-98B7-6D3685622991}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{AD28F537-C760-4777-9B9C-F43FD4F15078}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD28F537-C760-4777-9B9C-F43FD4F15078}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD28F537-C760-4777-9B9C-F43FD4F15078}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE3B3236-12F8-43AA-98B7-6D3685622991}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE3B3236-12F8-43AA-98B7-6D3685622991}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE3B3236-12F8-43AA-98B7-6D3685622991}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE3B3236-12F8-43AA-98B7-6D3685622991}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

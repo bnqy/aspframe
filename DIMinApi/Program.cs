@@ -15,7 +15,7 @@ string RegisterUser(string username)
 {
 	var emailSender = new EmailSender(  // to create EmailSender you have to create all its depencies
 				new MessageFactory(), 
-				new NetworkClient(
+				new NetworkClient(  // NetworkClient also needs a dependencies
 					new EmailServerSettings(Host: "smtp.server.com", Port: 25
 					)));
 	emailSender.SendEmail(username);
