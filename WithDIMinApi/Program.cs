@@ -14,10 +14,17 @@ builder.Services.AddSingleton(provider => // review
 
 var app = builder.Build();
 
+LinkGenerator generator = app.Services.GetRequiredService<LinkGenerator>(); // retrieve service from DI using WebApplication.Services
+
 app.MapGet("/", () => "Hello World!");
-app.MapGet("/register/{username}", RegisterUser);
+app.MapGet("/register/{username}", RegisterUser).WithName("Email");
 app.MapRazorPages();  // registers all Razors as an endpoint
 
+app.MapGet("/links", (LinkGenerator generator) =>    // injects service in endpoint handler 
+{
+	string link = generator.GetPathByName("Email", new { username = "dualipa"});
+	return $"View email sender at {link}";
+});
 
 app.Run();
 
