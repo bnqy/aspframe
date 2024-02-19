@@ -3,13 +3,16 @@ using WithDIMinApi;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages(); // adds all services of Razor to the IServiceCollection
 
+// builder.Services.AddEmailSender(); --> extencion method for services below
+
 builder.Services.AddScoped<IEmailSender, EmailSender>();  // Whenenver we require a IEmailSender use EmailSender
 builder.Services.AddSingleton<NetworkClient>(); // Whenever we require a NetworkClient use NetworkClient
 builder.Services.AddScoped<MessageFactory>(); // Whenever we require a MessageFactory use MessageFactory
-builder.Services.AddSingleton(provider => // review
-	new EmailServerSettings
+
+builder.Services.AddScoped(provider => // IServiceProvider instanse
+	new EmailServerSettings  // this instance of EmailServerSettings will be used whenever an instance is requiered
 	(
-		Host: "smtp.server.com",
+		Host: "smtp.server.com",   // EmailServerSettings constr is created everytime when EmailServerSettings is required
 		Port: 25
 	));
 
