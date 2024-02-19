@@ -2,9 +2,10 @@ using WithDIMinApi;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages(); // adds all services of Razor to the IServiceCollection
-builder.Services.AddScoped<IEmailSender, EmailSender>();  // review
-builder.Services.AddSingleton<NetworkClient>(); // review
-builder.Services.AddScoped<MessageFactory>(); // review
+
+builder.Services.AddScoped<IEmailSender, EmailSender>();  // Whenenver we require a IEmailSender use EmailSender
+builder.Services.AddSingleton<NetworkClient>(); // Whenever we require a NetworkClient use NetworkClient
+builder.Services.AddScoped<MessageFactory>(); // Whenever we require a MessageFactory use MessageFactory
 builder.Services.AddSingleton(provider => // review
 	new EmailServerSettings
 	(
