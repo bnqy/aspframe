@@ -1,8 +1,12 @@
+using Microsoft.Extensions.DependencyInjection.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IMessageSender, EmailSender>();  // registers in the DI container
 builder.Services.AddScoped<IMessageSender, FacebookSender>();  // registers in the DI
 builder.Services.AddScoped<IMessageSender, SmsSender>(); // adds to the DI container
+
+builder.Services.TryAddScoped<IMessageSender, UnregisteredSender>();  // this will not be registered bc theres an IMessageSender impl exists above
 
 var app = builder.Build();
 
@@ -57,5 +61,13 @@ public class SmsSender
 	public void SendMessage(string message)
 	{
 		Console.WriteLine($"Sending SMS message: {message}");
+	}
+}
+
+class UnregisteredSender : IMessageSender
+{
+	public void SendMessage(string message)
+	{
+		throw new Exception("I'm never registered so shouldn't be called");
 	}
 }
