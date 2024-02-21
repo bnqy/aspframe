@@ -1,4 +1,17 @@
 var builder = WebApplication.CreateBuilder(args);
+builder.Host.UseDefaultServiceProvider(o =>
+{
+	// Set the below values to true to always validate scopes,
+	// These are only set to false here to demonstrate the (errorenous)
+	// behaviour of captured dependencies on the /captured endpoint
+	o.ValidateScopes = false;
+	o.ValidateOnBuild = false;
+
+	// The default definition (commented out below) only
+	// validates in dev environments (for performance reasons)
+	//o.ValidateScopes = builder.Environment.IsDevelopment();
+	//o.ValidateOnBuild = builder.Environment.IsDevelopment();
+});
 
 // with them result will be: DataContext: 390260753, Repository: 563821397
 // bc a new instance is created when the service required
@@ -11,22 +24,26 @@ builder.Services.AddScoped<ScopedRepository>(); // a scope maps to single reques
 
 builder.Services.AddSingleton<SingletonDataContext>();  // the one instance will be used through out the life of app
 builder.Services.AddSingleton<SingletonRepository>();
+builder.Services.AddSingleton<CapturingRepository>();  // captive dependencies
 
 var app = builder.Build();
 
 app.MapGet("/", () => @"/transient
 /scoped
-/singleton");
+/singleton
+/captured");
 
 
 
 List<string> _transients = new();
 List<string> _scoped = new();
 List<string> _singletons = new();
+List<string> _captured = new();
 
 app.MapGet("/transient", TransientHandler);
 app.MapGet("/scoped", ScopedHandler);
 app.MapGet("/singleton", SingletonHandler);
+app.MapGet("/captured", Captured);
 
 
 
@@ -49,6 +66,9 @@ string SingletonHandler(SingletonDataContext dc, SingletonRepository repo)
 {
 	return RowCounts(dc, repo, _singletons);
 }
+
+string Captured(ScopedDataContext db, CapturingRepository repo)
+	=> RowCounts(db, repo, _captured);
 
 app.Run();
 
@@ -127,6 +147,14 @@ public class SingletonRepository
 	: Repository
 {
 	public SingletonRepository(SingletonDataContext dataContext) : base(dataContext)
+	{
+	}
+}
+
+public class CapturingRepository
+	: Repository
+{
+	public CapturingRepository(ScopedDataContext dataContext) : base(dataContext)
 	{
 	}
 }
