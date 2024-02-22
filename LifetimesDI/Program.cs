@@ -48,14 +48,18 @@ app.MapGet("/captured", Captured);
 
 
 
-
-
-
-
-string TransientHandler(TransientDataContext dc, TransientRepository repo)
+await using (var scope = app.Services.CreateAsyncScope()) // resolve service manually with IServiceScope
 {
-	return RowCounts(dc, repo, _transients);
+	var dc = scope.ServiceProvider.GetRequiredService<ScopedDataContext>();
+	Console.WriteLine($"Retrieved scope: {dc.RowCount}");
 }
+
+
+
+	string TransientHandler(TransientDataContext dc, TransientRepository repo)
+	{
+		return RowCounts(dc, repo, _transients);
+	}
 
 string ScopedHandler(ScopedDataContext dc, ScopedRepository repo)
 {
