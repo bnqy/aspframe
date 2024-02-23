@@ -28,7 +28,8 @@ builder.Services.AddSingleton<CapturingRepository>();  // captive dependencies
 
 var app = builder.Build();
 
-app.MapGet("/", () => @"/transient
+app.MapGet("/", () => 
+@"/transient
 /scoped
 /singleton
 /captured");
@@ -56,10 +57,11 @@ await using (var scope = app.Services.CreateAsyncScope()) // resolve service man
 
 
 
-	string TransientHandler(TransientDataContext dc, TransientRepository repo)
-	{
-		return RowCounts(dc, repo, _transients);
-	}
+
+string TransientHandler(TransientDataContext dc, TransientRepository repo)
+{
+	return RowCounts(dc, repo, _transients);
+}
 
 string ScopedHandler(ScopedDataContext dc, ScopedRepository repo)
 {
