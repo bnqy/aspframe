@@ -2,7 +2,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration.Sources.Clear(); // clears default providers WAB
 builder.Configuration.AddJsonFile("sharedSettings.json", optional: true); // adds sharedSettings before appsettinngs.json
-builder.Configuration.AddJsonFile("appsettings.json", optional: true);  // adds JSON rovider for appsettings.json  // appsettings added after sharedSettings so it will overrite same keys
+builder.Configuration.AddJsonFile("appsettings.json", optional: true, // adds JSON rovider for appsettings.json  // appsettings added after sharedSettings so it will overrite same keys
+	reloadOnChange: true);   //IConfiguration will be rebuilt if appsettings.json file changes
 builder.Configuration.AddEnvironmentVariables();  // adds machines env variables as conf provider  // this will overrite same keys in above
 
 var zoomLevel = builder.Configuration["MappSettings:DefaultZoomLevel"];  // can retrieve any value by key with dict syntax
