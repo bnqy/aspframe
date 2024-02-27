@@ -11,6 +11,8 @@ builder.Configuration.AddEnvironmentVariables();  // adds machines env variables
 
 builder.Services.Configure<AppDisplaySettings>(builder.Configuration.GetSection("AppDisplaySettings")); // binds the AppDisplaySettings section to POCO option class AppDisplaySettings
 builder.Services.Configure<MappSettings>(builder.Configuration.GetSection(nameof(MappSettings)));
+builder.Services.Configure<List<Store>>(builder.Configuration.GetSection("Stores"));  //List<Store>
+
 
 var zoomLevel = builder.Configuration["MappSettings:DefaultZoomLevel"];  // can retrieve any value by key with dict syntax
 var lat = builder.Configuration["MappSettings:DefaultLocation:latitude"];  // gets latitude from appsettings
@@ -20,9 +22,12 @@ var lat1 = builder.Configuration.GetSection("MappSettings")["DefaultLocation:lat
 
 var app = builder.Build();
 
-app.MapGet("/", () => app.Configuration.AsEnumerable());  // returns key-values
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
+app.MapGet("/ex", () => app.Configuration.AsEnumerable());  // returns key-values
 														  //app.MapGet("/", (IConfiguration ic) => ic.AsEnumerable());  // returns key-values same as above we can inject IConfigaration
-app.MapGet("/ex", () => $"{zoomLevel}, {lat}, {lat1}");
+app.MapGet("/ex2", () => $"{zoomLevel}, {lat}, {lat1}");
 
 app.MapGet("/display-settings", (IConfiguration ic) =>
 {
@@ -48,8 +53,9 @@ app.MapGet("/display-settings2", (IOptions<AppDisplaySettings> options, IOptions
 
 	MappSettings settings2 = options2.Value;
 	int defaultZoomLevel = settings2.DefaultZoomLevel;
+	Location defloc = settings2.DefaultLocation;
 
-	return new { title, showCopyright, defaultZoomLevel};
+	return new { title, showCopyright, defaultZoomLevel, defloc};
 });
 
 
@@ -65,6 +71,24 @@ app.MapGet("/display-settings3", (IOptionsSnapshot<AppDisplaySettings> iopsc) =>
 	};
 });
 
+app.MapGet("/mapsettings",(IOptions<MappSettings> opt) => opt.Value);
+app.MapGet("/displaysettings", (IOptionsSnapshot<AppDisplaySettings> opt) => opt.Value);
+app.MapGet("/stores", (IOptions<List<Store>> opt) => opt.Value);
+
+//donot favor following
+/*app.MapGet("/display-settings", (IConfiguration ic) =>
+{
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+	string title = ic["AppDisplaySettings:Title"];
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+
+#pragma warning disable CS8604 // Possible null reference argument.
+	bool showCopyright = bool.Parse(ic["AppDisplaySettings:ShowCopyright"]);
+#pragma warning restore CS8604 // Possible null reference argument.
+
+	return new { title, showCopyright };
+});*/
+
 app.Run();
 
 
@@ -76,5 +100,20 @@ public class AppDisplaySettings
 
 public class MappSettings
 {
+	public string GoogleMapsApiKey { get; set; }
 	public int DefaultZoomLevel { get; set; }
+
+    public Location DefaultLocation { get; set; }
+}
+
+public class Location
+{
+	public decimal Latitude { get; set; }
+	public decimal Longitude { get; set; }
+}
+
+public class Store
+{
+	public string Name { get; set; }
+	public Location Location { get; set; }
 }
