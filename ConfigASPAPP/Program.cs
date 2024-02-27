@@ -39,7 +39,7 @@ app.MapGet("/display-settings", (IConfiguration ic) =>
 
 
 // to get work the POCO class has to be registered Configure<T>
-app.MapGet("display-settings2", (IOptions<AppDisplaySettings> options, IOptions<MappSettings> options2) =>  // strongly typed with IOptions
+app.MapGet("/display-settings2", (IOptions<AppDisplaySettings> options, IOptions<MappSettings> options2) =>  // strongly typed with IOptions
 {
 	AppDisplaySettings settings = options.Value;  // Value exposes POCOs
 
@@ -50,6 +50,19 @@ app.MapGet("display-settings2", (IOptions<AppDisplaySettings> options, IOptions<
 	int defaultZoomLevel = settings2.DefaultZoomLevel;
 
 	return new { title, showCopyright, defaultZoomLevel};
+});
+
+
+// IOptionsSnapshot<T> updates autoly if the underlying file changes
+app.MapGet("/display-settings3", (IOptionsSnapshot<AppDisplaySettings> iopsc) =>
+{
+	AppDisplaySettings settings = iopsc.Value;
+
+	return new
+	{
+		title = settings.Title,
+		showCopyright = settings.ShowCopyright
+	};
 });
 
 app.Run();
