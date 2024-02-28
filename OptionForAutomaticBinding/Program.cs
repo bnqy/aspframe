@@ -2,6 +2,11 @@ using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// replacing default providers
+builder.Configuration.Sources.Clear();
+builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+builder.Configuration.AddJsonFile("extrasettings.json", optional: true, reloadOnChange: true);
+
 // bind IOptions options
 IConfigurationSection section = builder.Configuration.GetSection("AllOptions");
 builder.Services.Configure<BindableOptions>(section);
@@ -23,7 +28,7 @@ builder.Services.AddSingleton<BindableOptions>();
 
 var app = builder.Build();
 
-app.MapGet("/", () => "Hello World!");
+app.MapGet("/", (IConfiguration c) => c.AsEnumerable());
 app.MapGet("/bindable", (IOptions<BindableOptions> opt) => opt.Value);
 app.MapGet("/unbindable", (IOptions<UnbindableOptions> options) => options.Value);
 
