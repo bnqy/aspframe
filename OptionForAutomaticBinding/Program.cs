@@ -1,7 +1,31 @@
+using Microsoft.Extensions.Options;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// bind IOptions options
+IConfigurationSection section = builder.Configuration.GetSection("AllOptions");
+builder.Services.Configure<BindableOptions>(section);
+builder.Services.Configure<UnbindableOptions>(section);
+// same
+//builder.Services.Configure<BindableOptions>(builder.Configuration.GetSection("AllOptions"));
+//builder.Services.Configure<UnbindableOptions>(builder.Configuration.GetSection("AllOptions"));
+
+// format minimal APIs for legibility
+builder.Services.ConfigureHttpJsonOptions(o => o.SerializerOptions.WriteIndented = true);
+
+// manually bind and register the settings
+// Allows you to inject TestOptions directly into services, 
+// instead of using IOptions<TestOptions>
+var settings = new BindableOptions();
+section.Bind(settings); // same  builder.Configuration.GetSection("AllOptions").Bind(settings);
+builder.Services.AddSingleton<BindableOptions>();
+
+
 var app = builder.Build();
 
 app.MapGet("/", () => "Hello World!");
+app.MapGet("/bindable", (IOptions<BindableOptions> opt) => opt.Value);
+app.MapGet("/unbindable", (IOptions<UnbindableOptions> options) => options.Value);
 
 app.Run();
 

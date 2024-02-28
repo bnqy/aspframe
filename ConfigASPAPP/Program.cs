@@ -13,6 +13,10 @@ builder.Services.Configure<AppDisplaySettings>(builder.Configuration.GetSection(
 builder.Services.Configure<MappSettings>(builder.Configuration.GetSection(nameof(MappSettings)));
 builder.Services.Configure<List<Store>>(builder.Configuration.GetSection("Stores"));  //List<Store>
 
+// config strongly types without IOptions<T>
+var settings = new MappSettings();
+builder.Configuration.GetSection("MappSettings").Bind(settings);  // binds MappSettings section in IConfig to the settings object
+builder.Services.AddSingleton(settings);  // adds settings as Singleton
 
 var zoomLevel = builder.Configuration["MappSettings:DefaultZoomLevel"];  // can retrieve any value by key with dict syntax
 var lat = builder.Configuration["MappSettings:DefaultLocation:latitude"];  // gets latitude from appsettings
@@ -24,6 +28,8 @@ var app = builder.Build();
 
 app.UseDefaultFiles();
 app.UseStaticFiles();
+
+app.MapGet("/withoutiop", (MappSettings settings) => settings);  // without IOptions
 
 app.MapGet("/ex", () => app.Configuration.AsEnumerable());  // returns key-values
 														  //app.MapGet("/", (IConfiguration ic) => ic.AsEnumerable());  // returns key-values same as above we can inject IConfigaration
