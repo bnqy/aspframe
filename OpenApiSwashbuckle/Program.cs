@@ -24,9 +24,21 @@ app.MapGet("/fruit/{id}", (string id) =>
 _fruits.TryGetValue(id, out var fruit) 
 ? TypedResults.Ok(fruit)
 : Results.Problem(statusCode: 404))
+	.WithName("GetFruit")
+	.WithSummary("Gets a fruit")   // adds summary
+	.WithDescription("gets fruit by id, if"+  // adds Desc
+	"fruit does not exists returns 404")
 	.WithTags("fruit")   // groups endpoint in UI. each endpoint can have multi tags
 	.Produces<Fruit>()   // endpoint returns Fruit obj, and when not provided it assumed 200
-	.ProducesProblem(404);  // when id is not fount it returns 404
+	.ProducesProblem(404)  // when id is not fount it returns 404
+	.WithOpenApi(  // it must be added to work summary and desc
+	o =>
+	{
+		o.Parameters[0].Description = "Gets a id of fruit";  // describes parrameter
+       //o.Summary = "Gets id";  // can be used instead WithSummary()
+		return o;
+	}
+	);  
  
 app.MapPost("/fruit/{id}", (string id, Fruit fruit) => 
 _fruits.TryAdd(id, fruit)
@@ -35,6 +47,7 @@ _fruits.TryAdd(id, fruit)
 {
 	{ "id", new[] { "A fruit with this id already exists" } }
 }))
+	.WithName("PostFruit")
 	.WithTags("fruit")
 	.Produces<Fruit>(201)   // returns 201 instead 200
 	.ProducesValidationProblem();  // returns 400 with valid error

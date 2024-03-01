@@ -11,6 +11,7 @@
         "tags": [
           "fruit"
         ],
+        "operationId": "GetFruit",
         "parameters": [
           {
             "name": "id",
@@ -48,6 +49,7 @@
         "tags": [
           "fruit"
         ],
+        "operationId": "PostFruit",
         "parameters": [
           {
             "name": "id",
