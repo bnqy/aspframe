@@ -29,7 +29,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OptionForAutomaticBinding",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UsingDistinctEnvs", "UsingDistinctEnvs\UsingDistinctEnvs.csproj", "{04E15AED-7A55-4A5E-9C09-F20799D88A7A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenApiSwashbuckle", "OpenApiSwashbuckle\OpenApiSwashbuckle.csproj", "{1B217118-DDB7-44A1-9B75-07A3FB97D902}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenApiSwashbuckle", "OpenApiSwashbuckle\OpenApiSwashbuckle.csproj", "{1B217118-DDB7-44A1-9B75-07A3FB97D902}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleClient", "ConsoleClient\ConsoleClient.csproj", "{47AFD66E-637F-4958-A7AA-9A0CA4137BDF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,6 +95,10 @@ Global
 		{1B217118-DDB7-44A1-9B75-07A3FB97D902}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B217118-DDB7-44A1-9B75-07A3FB97D902}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B217118-DDB7-44A1-9B75-07A3FB97D902}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47AFD66E-637F-4958-A7AA-9A0CA4137BDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47AFD66E-637F-4958-A7AA-9A0CA4137BDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47AFD66E-637F-4958-A7AA-9A0CA4137BDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47AFD66E-637F-4958-A7AA-9A0CA4137BDF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
