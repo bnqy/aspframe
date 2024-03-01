@@ -8,11 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <OpenApiReference Include="OpenAPIs\swagger.json" Namespace="Fruit" ClassName="FruitClient">
-      <CodeGenerator>NSwagCSharp</CodeGenerator>
+    <OpenApiReference Include="OpenAPIs\swagger.json" CodeGenerator="NSwagCSharp" Namespace="Fruit" ClassName="FruitClass">
       <SourceUri>https://localhost:7286/swagger/v1/swagger.json</SourceUri>
-		<Options>/UseBaseUrl:false /GenerateClientInterfaces:true /JsonLibrary:SystemTextJson</Options>
-		<!--adds interface, base url to false, insted newton text.json-->
     </OpenApiReference>
   </ItemGroup>
 
