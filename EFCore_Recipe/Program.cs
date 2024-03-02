@@ -6,10 +6,13 @@ using System;
 var builder = WebApplication.CreateBuilder(args);
 
 // connstr taken from config, from ConnectionStrings section
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var connectionStringSqlite = builder.Configuration.GetConnectionString("DefaultConnection");
+var connectionStringSqlServer = builder.Configuration.GetConnectionString("SqlServer");
+
 
 // adds context class to DI
-builder.Services.AddDbContext<AppDbContext>(opt => opt.UseSqlite(connectionString));
+builder.Services.AddDbContext<AppDbContext>(opt => opt.UseSqlite(connectionStringSqlite));
+//builder.Services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(connectionStringSqlServer!));
 
 var app = builder.Build();
 
@@ -35,6 +38,8 @@ public class Recipe
 	public TimeSpan TimeToCook { get; set; }
 	public bool IsDeleted { get; set; }
 	public required string Method { get; set; }
+	public bool IsVegetarian { get; set; }
+	public bool IsVegan { get; set; }
 	public required ICollection<Ingredient> Ingredients { get; set; }  // many-one
 }
 
@@ -44,5 +49,6 @@ public class Ingredient
 	public int RecipeId { get; set; }  // as a FK
 	public required string Name { get; set; }
 	public decimal Quantity { get; set; }
+	public int JustMigrate { get; set; }
 	public required string Unit { get; set; }
 }
