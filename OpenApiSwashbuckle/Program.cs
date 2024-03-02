@@ -49,8 +49,14 @@ _fruits.TryAdd(id, fruit)
 }))
 	.WithName("PostFruit")
 	.WithTags("fruit")
+	.WithDescription("Adds fruit by id and returns 201(created), if exists returns 400")
 	.Produces<Fruit>(201)   // returns 201 instead 200
-	.ProducesValidationProblem();  // returns 400 with valid error
+	.ProducesValidationProblem() // returns 400 with valid error
+	.WithOpenApi(o =>
+	{
+		o.Parameters[0].Description = "Id of a fruit";
+		return o;
+	});  
 
 app.Run();
 
