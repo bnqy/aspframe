@@ -4,6 +4,13 @@ using Microsoft.EntityFrameworkCore;
 using System;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// connstr taken from config, from ConnectionStrings section
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+// adds context class to DI
+builder.Services.AddDbContext<AppDbContext>(opt => opt.UseSqlite(connectionString));
+
 var app = builder.Build();
 
 app.MapGet("/", () => "Hello World!");
