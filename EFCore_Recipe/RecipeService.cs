@@ -6,6 +6,12 @@ public class RecipeService
 {
 	readonly AppDbContext appDbContext;
 
+	public RecipeService(AppDbContext context)
+	{
+		appDbContext = context;
+	}
+
+
 	public async Task<int> CreateRecipe(CreateRecipeCommand cmd)
 	{
 		var recipe = new Recipe
@@ -62,5 +68,15 @@ public class RecipeService
 				})
 			})
 			.SingleOrDefaultAsync();
+	}
+
+	public async Task UpdateRecipe(UpdateRecipeCommand cmd)
+	{
+		var recipe = await appDbContext.Recipes.FindAsync(cmd.Id);
+		if (recipe == null) { throw new Exception("Unable to find the recipe"); }
+		if (recipe.IsDeleted) { throw new Exception("Unable to update a deleted recipe"); }
+
+		cmd.UpdateRecipe(recipe);
+		await appDbContext.SaveChangesAsync();
 	}
 }

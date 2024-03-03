@@ -5,11 +5,15 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
+using EFCore_Recipe;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(x => x.SwaggerDoc("v1", new OpenApiInfo { Title="Recipe App", Version="v1"}));
+
+builder.Services.AddScoped<RecipeService>();
+builder.Services.AddProblemDetails();
 
 // connstr taken from config, from ConnectionStrings section
 var connectionStringSqlite = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -24,7 +28,21 @@ var app = builder.Build();
 
 app.UseSwagger(); app.UseSwaggerUI();
 
-app.MapGet("/", () => "Hello World!");
+
+RouteGroupBuilder routes = app.MapGroup("")
+	.WithTags("Recipes")
+	.WithOpenApi();
+
+routes.MapGet("/", async (RecipeService service) =>
+{
+	return await service.GetRecipes();
+});
+
+routes.MapPost("/", async (CreateRecipeCommand cmd, RecipeService service) =>
+{
+	var id = await service.CreateRecipe(cmd);
+	return Results.CreatedAtRoute("view-recipe", new { id });
+});
 
 app.Run();
 
