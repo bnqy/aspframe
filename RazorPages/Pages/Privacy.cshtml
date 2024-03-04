@@ -1,8 +1,12 @@
 ﻿@page
-@model PrivacyModel
+@*@page indicates that its Razor Pages*@
+@model PrivacyModel   
+@*@model PrivacyModel -> links the Razor pages to specific model*@
 @{
-    ViewData["Title"] = "Privacy Policy";
+    ViewData["Title"] = "Privacy Policy"; // does not write to response
 }
 <h1>@ViewData["Title"]</h1>
+@*C# writes to response*@
 
 <p>Use this page to detail your site's privacy policy.</p>
+@*html static*@
