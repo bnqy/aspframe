@@ -37,7 +37,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RazorPages", "RazorPages\Ra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RazorPagesApp", "RazorPagesApp\RazorPagesApp.csproj", "{6639F315-E9D8-43FA-A7FB-4151FD92E286}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorPagesRouting", "RazorPagesRouting\RazorPagesRouting.csproj", "{928D3BE2-0C55-43B4-BE79-AA9E01C3B196}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RazorPagesRouting", "RazorPagesRouting\RazorPagesRouting.csproj", "{928D3BE2-0C55-43B4-BE79-AA9E01C3B196}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
