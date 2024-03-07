@@ -16,7 +16,7 @@ namespace RazorPagesRouting.Pages
         }
 
         [BindProperty, Required]
-        public string SearchTerm { get; set; }
+        public string SearchTerm { get; set; }  // this is model bound
         public List<Product> Results { get; private set; }
 
        
@@ -27,18 +27,26 @@ namespace RazorPagesRouting.Pages
             var url3 = _linkGenerator.GetPathByPage(HttpContext, "/ProductDetails/Index", values: new { name = "big-widget" });
             var url4 = _linkGenerator.GetUriByPage(page: "/ProductDetails/Index",
                 handler: null,
-                values: new { id = 5},
+                values: new { name = "big-widget" },
                 scheme: "https",
                 host: new HostString("www.example.com"));
+
+            Console.Write(@"{0}
+{1}
+{2}
+{3}", url1, url2, url3, url4) ;
         }
 
-        public void OnPost()
+        public IActionResult OnPost()
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid)   // checks if models are valid
             {
                 Results = _service.Search(SearchTerm, StringComparison.Ordinal);
+
+                return Page();  // returns PageResult
             }
 
+            return RedirectToPage("./Index"); // returns RedirectToPage and reditrects to /index
         }
         public void OnPostIgnoreCase()
         {
