@@ -39,6 +39,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RazorPagesApp", "RazorPages
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RazorPagesRouting", "RazorPagesRouting\RazorPagesRouting.csproj", "{928D3BE2-0C55-43B4-BE79-AA9E01C3B196}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorPagesStatusCodesReExecute", "RazorPagesStatusCodesReExecute\RazorPagesStatusCodesReExecute.csproj", "{AA26039F-A37E-437C-99E9-6A4B51F14730}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,6 +119,10 @@ Global
 		{928D3BE2-0C55-43B4-BE79-AA9E01C3B196}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{928D3BE2-0C55-43B4-BE79-AA9E01C3B196}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{928D3BE2-0C55-43B4-BE79-AA9E01C3B196}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA26039F-A37E-437C-99E9-6A4B51F14730}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA26039F-A37E-437C-99E9-6A4B51F14730}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA26039F-A37E-437C-99E9-6A4B51F14730}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA26039F-A37E-437C-99E9-6A4B51F14730}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
