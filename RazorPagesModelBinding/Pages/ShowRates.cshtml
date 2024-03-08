@@ -1,0 +1,15 @@
+﻿@page
+@model RazorPagesModelBinding.Pages.ShowRatesModel
+@{
+    ViewData["Title"] = "Rates";
+}
+
+<h1>Exchange rates</h1>
+
+<dl class="dl-horizontal">
+    @foreach (var item in Model.SelectedCurrencies)
+    {
+        <dt>@item.Key</dt>
+        <dd>@item.Value</dd>
+    }
+</dl>
