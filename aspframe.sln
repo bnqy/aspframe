@@ -41,7 +41,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RazorPagesRouting", "RazorP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RazorPagesStatusCodesReExecute", "RazorPagesStatusCodesReExecute\RazorPagesStatusCodesReExecute.csproj", "{AA26039F-A37E-437C-99E9-6A4B51F14730}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorPagesModelBinding", "RazorPagesModelBinding\RazorPagesModelBinding.csproj", "{D4306092-F591-4EFA-BA31-2140B540A262}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RazorPagesModelBinding", "RazorPagesModelBinding\RazorPagesModelBinding.csproj", "{D4306092-F591-4EFA-BA31-2140B540A262}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

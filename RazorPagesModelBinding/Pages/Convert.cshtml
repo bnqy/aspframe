@@ -1,0 +1,10 @@
+﻿@page "/{currencyIn}/{currencyOut}"
+@*https://localhost:7289/usd/GDP/  https://localhost:7289/usd/GDP?qty=2*@
+@model RazorPagesModelBinding.Pages.ConvertModel
+@{
+	ViewData["Title"] = "Convert";
+}
+
+<h1>Converter</h1>
+
+<p>@Model.Values</p>

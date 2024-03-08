@@ -1,0 +1,9 @@
+﻿@page "{number}"
+@* /Calculator/5  here number=5*@
+@model RazorPagesModelBinding.Pages.CalculatorModel
+@{
+	ViewData["Title"] = "Calculator";
+}
+
+<h1>Calculator</h1>
+<p>Square is @Model.Square (@Model.Input)</p>
