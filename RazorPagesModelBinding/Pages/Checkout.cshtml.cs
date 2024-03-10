@@ -19,10 +19,14 @@ namespace RazorPagesModelBinding.Pages
         // bc [BindProperty] public UserBindingModel Input { get; set; } added
         public IActionResult OnPost()
         {
+            // here goes invalid model validation
+            // if validation fails it returns errors
             if (!ModelState.IsValid)
             {
-                return Page();
+                return Page();  // if is not valid the form redisplays
             }
+            // takeaway is to check modelstate is valid or not and then
+            // transaction afterwards
 
             //return Page();
             return RedirectToPage("Success");
