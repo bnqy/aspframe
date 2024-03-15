@@ -1,0 +1,25 @@
+﻿@page
+@model RazorpagesTagHelpers.Pages.ConvertModel
+@{
+	ViewData["Title"] = "Currency Convert";
+}
+
+<h1>Convert Values</h1>
+<p>choose the currencies</p>
+
+<form method="post">
+	<div class="form-group">
+		<label asp-for="Input.CurrencyFrom"></label>
+		<select class="form-control dropdown" asp-for="Input.CurrencyFrom" asp-items="Model.CurrencyCodes">
+			<option value=""></option>
+		</select>
+		<span asp-validation-for="Input.CurrencyFrom" class="text-danger"></span>
+	</div>
+	<div class="form-group">
+
+	</div>
+	<div class="form-group">
+
+	</div>
+	<button type="submit"></button>
+</form>
