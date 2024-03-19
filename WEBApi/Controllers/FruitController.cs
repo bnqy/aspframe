@@ -2,8 +2,12 @@
 
 namespace WEBApi.Controllers
 {
+	//with this attribute the [frombody is worked self]
+	// validation autoly checked. if invalid returns 400
+	// error status codes autoly converted to ProblemDetails NotFound() -> ProblemDetails
 	[ApiController]  // api specifics
-	//[Route("api/fruit")]
+					 //[Route("api/fruit")]partial
+	[Route("[controller]")]
 	public class FruitController : ControllerBase
 	{
 		private readonly FruitService _fruitService;

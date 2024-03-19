@@ -4,7 +4,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton<FruitService>();
 
 
-builder.Services.AddControllers();  // adds necassery services for controllers
+builder.Services.AddControllers() // adds necassery services for controllers
+	.ConfigureApiBehaviorOptions(opt =>
+	{
+		opt.SuppressModelStateInvalidFilter = true; // this will ignore automatic 400 bad request for invalid request
+	});  
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();  // related with Swagger
 builder.Services.AddSwaggerGen();  // this is too
