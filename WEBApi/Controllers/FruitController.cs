@@ -3,6 +3,7 @@
 namespace WEBApi.Controllers
 {
 	[ApiController]  // api specifics
+	//[Route("api/fruit")]
 	public class FruitController : ControllerBase
 	{
 		private readonly FruitService _fruitService;
@@ -12,8 +13,9 @@ namespace WEBApi.Controllers
 		}
 
 		[HttpGet("fruit")]  // defines the route template so -> /fruit
-		//[Route("")]  // can have multiple [RouteAttributes]
-		//[Route("/hi")]
+		//[Route("")]  // can have multiple [RouteAttributes]  // also gives /api/fruit bc of [Route("api/fruit")]
+        //[Route("/hi")]  // this will not give /api/fruit/hi bc it starts with '/'
+        //[HttpGet]
 		public IEnumerable<string> Index()  // the name of action is not used for routing
 		{
 			return _fruitService.Fruit;
@@ -22,6 +24,7 @@ namespace WEBApi.Controllers
 		[HttpGet("fruit/{id}")]  // so -> /fruit/{id}
 		//[Route("view/{id}")]
 		//[Route("view-hi/{id}")]
+		//[HttpGet]
 		public ActionResult<string> View(int id)  // it can return string or an IActionResult
 		{
 			if (id >= 0 && id < _fruitService.Fruit.Count)
