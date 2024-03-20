@@ -1,14 +1,25 @@
+using Microsoft.AspNetCore.Mvc.Formatters;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddSingleton<FruitService>();
 
 
-builder.Services.AddControllers() // adds necassery services for controllers
-	.ConfigureApiBehaviorOptions(opt =>
+builder.Services.AddControllers(opt =>
+{
+	//opt.RespectBrowserAcceptHeader = true;
+	//opt.OutputFormatters.RemoveType<StringOutputFormatter>();
+}) // adds necassery services for controllers
+	.AddXmlSerializerFormatters()  // adds XML formatter
+	.AddNewtonsoftJson()  // adds JSON formatter (newton rather then text.json)
+    .ConfigureApiBehaviorOptions(opt =>
 	{
-		opt.SuppressModelStateInvalidFilter = true; // this will ignore automatic 400 bad request for invalid request
-	});  
+		//opt.SuppressModelStateInvalidFilter = true; // this will ignore automatic 400 bad request for invalid request
+	});
+
+
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();  // related with Swagger
 builder.Services.AddSwaggerGen();  // this is too
