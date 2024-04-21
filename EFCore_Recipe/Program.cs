@@ -9,6 +9,9 @@ using EFCore_Recipe;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddControllers();
+builder.Services.AddRazorPages();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(x => x.SwaggerDoc("v1", new OpenApiInfo { Title="Recipe App", Version="v1"}));
 
@@ -25,6 +28,13 @@ builder.Services.AddDbContext<AppDbContext>(opt => opt.UseSqlite(connectionStrin
 //builder.Services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(connectionStringSqlServer!));
 
 var app = builder.Build();
+
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Error");
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
+}
 
 app.UseSwagger(); app.UseSwaggerUI();
 
@@ -43,6 +53,17 @@ routes.MapPost("/", async (CreateRecipeCommand cmd, RecipeService service) =>
 	var id = await service.CreateRecipe(cmd);
 	return Results.CreatedAtRoute("view-recipe", new { id });
 });
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+
+
+app.UseRouting();
+
+app.UseAuthorization();
+
+app.MapRazorPages();
+app.MapControllers();
 
 app.Run();
 
