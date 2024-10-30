@@ -49,7 +49,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RazorpagesTagHelpers", "Raz
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MVC", "MVC\MVC.csproj", "{5CEB20A2-D7E5-4CD8-AB35-733E2893C503}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WEBApi", "WEBApi\WEBApi.csproj", "{CAAA096F-7632-4D2C-B96F-6D3D2FAE60E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WEBApi", "WEBApi\WEBApi.csproj", "{CAAA096F-7632-4D2C-B96F-6D3D2FAE60E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiddleWExample", "MiddleWExample\MiddleWExample.csproj", "{405753A0-6AE7-446C-A5C1-6D41BF3C15D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -153,6 +155,10 @@ Global
 		{CAAA096F-7632-4D2C-B96F-6D3D2FAE60E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CAAA096F-7632-4D2C-B96F-6D3D2FAE60E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CAAA096F-7632-4D2C-B96F-6D3D2FAE60E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{405753A0-6AE7-446C-A5C1-6D41BF3C15D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{405753A0-6AE7-446C-A5C1-6D41BF3C15D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{405753A0-6AE7-446C-A5C1-6D41BF3C15D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{405753A0-6AE7-446C-A5C1-6D41BF3C15D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
